@@ -6,13 +6,29 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import pe.pucp.dduu.tel306.lab4g1.Clases.API.Usuario.Usuario;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,15 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(verificarExistenciaDelArchivo()){
-
-
-
-        }
-        else{ //NO EXISTE EL ARCHIVO
-            abrirFragmentoIngreso();
-
-        }
+        abrirFragmentoRegistro();
 
 
 
@@ -37,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 //FUNCION PARA GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
-    public void guardarArchivo(String name,String email,String password){
+    /*public void guardarArchivo(String name,String email,String password){
         Usuario usuario = new Usuario();
         usuario.setName(name);
         usuario.setEmail(email);
@@ -53,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
    //VERIFICAR SI EL ARCHIVO EXISTE
     public boolean verificarExistenciaDelArchivo(){
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
 
     //FRAGMENTOS
     //FUNCIONES PARA ABRIR Y BORRAR FRAGMENTOS*********************************
