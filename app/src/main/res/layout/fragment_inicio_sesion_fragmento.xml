@@ -13,7 +13,7 @@
         android:layout_height="414dp">
 
         <EditText
-            android:id="@+id/editTextEmail"
+            android:id="@+id/editTextCorreoIngreso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
@@ -25,17 +25,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/editTextContraseñaIngreso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
             android:ems="10"
             android:hint="Contraseña"
             android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="@+id/editTextEmail"
+            app:layout_constraintEnd_toEndOf="@+id/editTextCorreoIngreso"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/editTextEmail"
-            app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+            app:layout_constraintStart_toStartOf="@+id/editTextCorreoIngreso"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCorreoIngreso" />
 
         <Button
             android:id="@+id/btnIniciarSesion"
@@ -43,9 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
             android:text="Iniciar Sesion"
-            app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
-            app:layout_constraintStart_toStartOf="@+id/editTextPassword"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+            app:layout_constraintEnd_toEndOf="@+id/editTextContraseñaIngreso"
+            app:layout_constraintStart_toStartOf="@+id/editTextContraseñaIngreso"
+            app:layout_constraintTop_toBottomOf="@+id/editTextContraseñaIngreso" />
 
         <Button
             android:id="@+id/btnRegistro"
