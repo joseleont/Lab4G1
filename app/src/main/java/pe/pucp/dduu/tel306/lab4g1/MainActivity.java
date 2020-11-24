@@ -14,7 +14,11 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -234,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
         preguntaId= id; //CON ESTO SE OBTIENE EL ID DE LA PREGUNTA
 
-        abrirFragmentoDetallePreguntas( preguntaId);
+        abrirFragmentoDetallePreguntas(preguntaId);
     } //PARADO
 
     public void abrirFragmentoDetallePreguntas(int id){
@@ -246,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         //PARADO USAR ESE ID
         fragmentTransaction.add(R.id.fragmentContainerIngreso, detallePreguntasFragmento);
         fragmentTransaction.commit();
+
     }
 
 

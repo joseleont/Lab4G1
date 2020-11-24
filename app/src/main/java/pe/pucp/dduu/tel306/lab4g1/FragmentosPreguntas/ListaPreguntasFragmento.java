@@ -76,9 +76,9 @@ public class ListaPreguntasFragmento extends Fragment {
                         Gson gson = new Gson();
                         preguntaYRespuesta= gson.fromJson(response, PreguntaYRespuesta[].class);
 
-                        Log.d("info",preguntaYRespuesta[0].getQuestionText());
+                       // Log.d("info",preguntaYRespuesta[0].getQuestionText());
 
-                        //int a=preguntaYRespuesta.length;
+
                         LinearLayout ll = view.findViewById(R.id.preguntasLayout);
 
 
