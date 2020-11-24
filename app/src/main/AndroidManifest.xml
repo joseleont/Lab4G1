@@ -5,10 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_iconoinicio"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_iconoinicio_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab4G1">
         <activity android:name=".MainActivity">
