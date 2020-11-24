@@ -20,8 +20,8 @@ public class RegistroFragmento extends Fragment {
    
     public static RegistroFragmento newInstance() {
 
-        RegistroFragmento fragment = null;
-        return fragment;
+
+        return new RegistroFragmento();
     }
 
     @Override
