@@ -7,3 +7,7 @@ Every question will have different options.
 Questions will have at least one of the options as an answer.
 When a question is answered, the user will have a view with the statistics for that question.
 Once a question is answered, the question can not be changed.
+
+
+
+
