@@ -1,8 +1,8 @@
-package pe.pucp.dduu.tel306.lab4g1.Clases.Preguntas;
+package pe.pucp.dduu.tel306.lab4g1.Clases.API.Preguntas;
 
 import java.io.Serializable;
 
-public class Respuesta implements Serializable {
+public class Respuesta {
 
     private int id;
     private String answerText;

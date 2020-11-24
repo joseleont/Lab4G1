@@ -7,11 +7,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.io.FileInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-import pe.pucp.dduu.tel306.lab4g1.Clases.Preguntas.Respuesta;
+import pe.pucp.dduu.tel306.lab4g1.Clases.API.Usuario.Usuario;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,29 +21,50 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(verificarExistenciaDelArchivo()){
+
+
+
+        }
+        else{ //NO EXISTE EL ARCHIVO
+            abrirFragmentoIngreso();
+
+        }
+
 
 
 
     }
 
-   //VERIFICAR SI EL ARCHIVO EXISTE
-    public void verificarArchivo(){
-        try(FileInputStream fileInputStream =openFileInput("archivoPersona.data");
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);){
+//FUNCION PARA GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
+    public void guardarArchivo(String name,String email,String password){
+        Usuario usuario = new Usuario();
+        usuario.setName(name);
+        usuario.setEmail(email);
+        usuario.setPassword(password);
 
-            while(fileInputStream.available()>0){ //available es para saber si hay para leer
+        try(FileOutputStream fileOutputStream =openFileOutput("InformacionUsuario",MODE_PRIVATE);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);){
 
-                Respuesta persona=(Respuesta) objectInputStream.readObject();
-                Log.d("infoApp",""+persona.getId());
-            }
+            objectOutputStream.writeObject(usuario);
+            Log.d("msg","escritura de objeto exitosa");
 
-
-        }catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        }catch(IOException e){
             e.printStackTrace();
         }
 
+    }
+
+   //VERIFICAR SI EL ARCHIVO EXISTE
+    public boolean verificarExistenciaDelArchivo(){
+
+        File archivo = new File("configuracion.json");
+        if (!archivo.exists()) {
+            Log.d("infoApp","OJO: ¡¡No existe el archivo de configuración!!");
+          return false;
+        }
+
+        return true;
     }
 
     //FRAGMENTOS

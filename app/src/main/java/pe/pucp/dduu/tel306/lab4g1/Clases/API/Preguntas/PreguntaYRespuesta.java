@@ -1,4 +1,4 @@
-package pe.pucp.dduu.tel306.lab4g1.Clases.Preguntas;
+package pe.pucp.dduu.tel306.lab4g1.Clases.API.Preguntas;
 
 public class PreguntaYRespuesta {
 
