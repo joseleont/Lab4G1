@@ -3,21 +3,30 @@ package pe.pucp.dduu.tel306.lab4g1;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,9 +35,8 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import pe.pucp.dduu.tel306.lab4g1.Clases.API.Preguntas.Respuesta;
 import pe.pucp.dduu.tel306.lab4g1.Clases.API.Usuario.Usuario;
-
-import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,15 +45,110 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        abrirFragmentoRegistro();
+        obtenerPreguntasQuestions();
+
+        if(verificarExistenciaDelArchivo()){
+
+
+
+        }
+        else{ //NO EXISTE EL ARCHIVO
+            abrirFragmentoIngreso();
+
+
+        }
 
 
 
 
     }
 
+    public void obtenerPreguntasQuestions(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String url = "http://34.236.191.118:3000/api/v1/questions";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("infoWS", "response");
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+
+        };
+
+
+        requestQueue.add(stringRequest);
+    }
+
+
+    //POST
+    public void obtenerRespuestaUsersNew(){
+        if (tengoInternet()) {
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+            Map<String, String> parametros= new HashMap<String, String>();
+            Usuario usuario = new Usuario();
+            usuario.setName("Mario Sotelo");
+            usuario.setEmail("mgsotelo@pucp.pe");
+            usuario.setPassword("1234567890");
+
+            parametros.put("name",usuario.getName());
+            parametros.put("email",usuario.getEmail());
+            parametros.put("password",usuario.getPassword());
+
+
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                    "http://34.236.191.118:3000/api/v1/users/new", new JSONObject(parametros),
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("infoWs", response.toString());
+
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //Log.d("infoWs", "error");
+
+                }
+            }) {
+
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                   // HashMap<String, String> headers = new HashMap<String, String>();
+                   // headers.put("Content-Type", "application/json; charset=utf-8");
+                    //return headers;
+                    return super.getHeaders();
+                }
+
+
+
+            };
+
+
+            requestQueue.add(jsonObjReq);
+        }
+
+    }
+
+
+
+
+
+
 //FUNCION PARA GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
-    /*public void guardarArchivo(String name,String email,String password){
+    public void guardarArchivo(String name,String email,String password){
         Usuario usuario = new Usuario();
         usuario.setName(name);
         usuario.setEmail(email);
@@ -61,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-    }*/
+    }
 
    //VERIFICAR SI EL ARCHIVO EXISTE
     public boolean verificarExistenciaDelArchivo(){
@@ -74,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
-
 
     //FRAGMENTOS
     //FUNCIONES PARA ABRIR Y BORRAR FRAGMENTOS*********************************
@@ -123,6 +225,51 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
             fragmentTransaction.remove(registroFragmento);
             fragmentTransaction.commit();
+        }
+    }
+
+
+
+
+
+
+
+    public boolean tengoInternet() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager == null)
+            return false;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Network networks = connectivityManager.getActiveNetwork();
+            if (networks == null)
+                return false;
+
+            NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(networks);
+            if (networkCapabilities == null)
+                return false;
+
+            if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))
+                return true;
+            if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
+                return true;
+            if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))
+                return true;
+            return false;
+        } else {
+
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            if (activeNetworkInfo == null)
+                return false;
+            if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI)
+                return true;
+            if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_MOBILE)
+                return true;
+            if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_ETHERNET)
+                return true;
+            return false;
+
         }
     }
 
