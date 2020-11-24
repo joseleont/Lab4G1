@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
         preguntaId= id; //CON ESTO SE OBTIENE EL ID DE LA PREGUNTA
 
-        abrirFragmentoDetallePreguntas(int preguntaId);
+        abrirFragmentoDetallePreguntas( preguntaId);
     } //PARADO
 
     public void abrirFragmentoDetallePreguntas(int id){
