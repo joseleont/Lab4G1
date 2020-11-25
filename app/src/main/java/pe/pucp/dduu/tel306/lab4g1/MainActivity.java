@@ -64,70 +64,13 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
             abrirFragmentoIngreso();
         }
 
-
     }
-
-    //POST
-    public void obtenerRespuestaUsersNew(){
-        if (tengoInternet()) {
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-            Map<String, String> parametros= new HashMap<String, String>();
-            Usuario usuario = new Usuario();
-            usuario.setName("Mario Sotelo");
-            usuario.setEmail("mgsotelo@pucp.pe");
-            usuario.setPassword("1234567890");
-
-            parametros.put("name",usuario.getName());
-            parametros.put("email",usuario.getEmail());
-            parametros.put("password",usuario.getPassword());
-
-
-            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                    "http://34.236.191.118:3000/api/v1/users/new", new JSONObject(parametros),
-                    new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("infoWs", response.toString());
-
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    //Log.d("infoWs", "error");
-
-                }
-            }) {
-
-
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                   // HashMap<String, String> headers = new HashMap<String, String>();
-                   // headers.put("Content-Type", "application/json; charset=utf-8");
-                    //return headers;
-                    return super.getHeaders();
-                }
-
-
-
-            };
-
-
-            requestQueue.add(jsonObjReq);
-        }
-
-    }
-
-
-
-
 
 
 //FUNCION PARA GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
-    public void guardarArchivo(String name,String email,String password){
+    public void guardarArchivo(int idUsuario,String name,String email,String password){
         Usuario usuario = new Usuario();
+        usuario.setId(idUsuario);
         usuario.setName(name);
         usuario.setEmail(email);
         usuario.setPassword(password);
@@ -147,9 +90,9 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
    //VERIFICAR SI EL ARCHIVO EXISTE
     public boolean verificarExistenciaDelArchivo(){
 
-        File archivo = new File("configuracion.json");
+        File archivo = new File("InformacionUsuario");
         if (!archivo.exists()) {
-            Log.d("infoApp","OJO: ¡¡No existe el archivo de configuración!!");
+            Log.d("infoApp","No existe el archivo");
           return false;
         }
 
