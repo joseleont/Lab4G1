@@ -45,7 +45,7 @@ import pe.pucp.dduu.tel306.lab4g1.Clases.API.Usuario.Usuario;
 import pe.pucp.dduu.tel306.lab4g1.FragmentosPreguntas.DetallePreguntasFragmento;
 import pe.pucp.dduu.tel306.lab4g1.FragmentosPreguntas.ListaPreguntasFragmento;
 
-public class MainActivity extends AppCompatActivity implements ListaPreguntasFragmento.BorrarFragmentoListaPreguntas{
+public class MainActivity extends AppCompatActivity implements ListaPreguntasFragmento.BorrarFragmentoListaPreguntas, DetallePreguntasFragmento.ObtenerIdPregunta {
 
     private int preguntaId=0;
 
@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
     //FUNCION PARA BORRAR EL FRAGMENTO
     //LLAMADO DE ListaPreguntaFragmentos
+
     @Override
     public void borrarFragmentoListaPreguntas(int id) {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -238,10 +239,10 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
         preguntaId= id; //CON ESTO SE OBTIENE EL ID DE LA PREGUNTA
 
-        abrirFragmentoDetallePreguntas(preguntaId);
+        abrirFragmentoDetallePreguntas();
     } //PARADO
 
-    public void abrirFragmentoDetallePreguntas(int id){
+    public void abrirFragmentoDetallePreguntas(){
 
         DetallePreguntasFragmento detallePreguntasFragmento= new DetallePreguntasFragmento().newInstance();
         FragmentManager fragmentManager=getSupportFragmentManager();
@@ -249,12 +250,34 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
         //PARADO USAR ESE ID
         fragmentTransaction.add(R.id.fragmentContainerIngreso, detallePreguntasFragmento);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
 
     }
 
 
 
+    //DetallePreguntasFragmentos
+    @Override
+    public int obtenerIdPregunta() {
+        return preguntaId;
+    }
+
+    @Override
+    public void borrarFragmentoDetallePreguntas() {
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+
+        DetallePreguntasFragmento detallePreguntasFragmento = (DetallePreguntasFragmento) supportFragmentManager.findFragmentById(R.id.fragmentContainerIngreso);
+        if (detallePreguntasFragmento != null) { //SI HAY UNFRAGMENTO QUE BORRAR SE INGRESA AL IF
+            //se inicia la transaccion
+            FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+            fragmentTransaction.remove(detallePreguntasFragmento);
+            fragmentTransaction.commit();
+        }
+
+        abrirFragmentoListaPreguntas(); //VOLVER A LA PARTE DE PREGUNTAS
+    }
 
     public boolean tengoInternet() {
         ConnectivityManager connectivityManager =

@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
             android:layout_marginBottom="79dp"
-            android:text="LISTA DE PREGUNTAS"
+            android:text="@string/lista_de_preguntas"
             app:layout_constraintBottom_toTopOf="@+id/preguntasLayout"
             app:layout_constraintEnd_toEndOf="@+id/preguntasLayout"
             app:layout_constraintHorizontal_bias="0.498"
