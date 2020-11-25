@@ -40,7 +40,19 @@ public class InicioSesionFragmento extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inicio_sesion_fragmento, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_inicio_sesion_fragmento, container, false);
+        Button btnRegistro = view.findViewById(R.id.btnRegistro);
+        //otros botones y views xdxd
+
+        btnRegistro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).reemplazarUnFragmentPorElOtroXDXD(RegistroFragmento.class);
+            }
+        });
+
+        return view;
     }
 
 

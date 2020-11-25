@@ -41,7 +41,7 @@
             android:layout_marginTop="64dp"
             android:ems="10"
             android:hint="Contraseña"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|textPassword"
             app:layout_constraintEnd_toEndOf="@+id/editTextCorreoRegistro"
             app:layout_constraintStart_toStartOf="@+id/editTextCorreoRegistro"
             app:layout_constraintTop_toBottomOf="@+id/editTextCorreoRegistro" />

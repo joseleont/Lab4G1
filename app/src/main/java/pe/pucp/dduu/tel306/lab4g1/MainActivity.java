@@ -1,5 +1,6 @@
 package pe.pucp.dduu.tel306.lab4g1;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -229,7 +230,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    public void reemplazarUnFragmentPorElOtroXDXD(Class fragmentClass){
+        Fragment fg = null;
+        try {
+            fg = (Fragment) fragmentClass.newInstance();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        FragmentManager supportFragmentManager = this.getSupportFragmentManager();
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerIngreso, fg).commit();
+    }
 
 
 
