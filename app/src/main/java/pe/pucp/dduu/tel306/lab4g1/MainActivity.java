@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(!verificarExistenciaDelArchivo()){
+        if(verificarExistenciaDelArchivo()){
            //NO HAY UN ARCHIVO GUARDADO EN EL CELULAR
             abrirFragmentoListaPreguntas();
         }
@@ -86,11 +87,9 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                     "http://34.236.191.118:3000/api/v1/users/new", new JSONObject(parametros),
                     new Response.Listener<JSONObject>() {
-
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.d("infoWs", response.toString());
-
                         }
                     }, new Response.ErrorListener() {
 
@@ -142,6 +141,27 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
             e.printStackTrace();
         }
 
+    }
+
+    public void guardarArchivov2(String json){
+        try{
+            File archivo = new File("configuracion.json");
+            if (!archivo.exists()) {
+                FileWriter writer = new FileWriter(archivo);
+                writer.append(json);
+                writer.flush();
+                writer.close();
+                Log.d("msg","creacion de json exitosa");
+            }
+            /*
+            FileOutputStream fileOutputStream =openFileOutput("InformacionUsuario",MODE_PRIVATE);
+            fileOutputStream.write(json.getBytes());
+
+            fileOutputStream.close();
+            */
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
    //VERIFICAR SI EL ARCHIVO EXISTE
