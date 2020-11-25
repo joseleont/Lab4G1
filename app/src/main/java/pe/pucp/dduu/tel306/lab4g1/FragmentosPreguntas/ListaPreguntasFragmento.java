@@ -1,6 +1,7 @@
 package pe.pucp.dduu.tel306.lab4g1.FragmentosPreguntas;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -80,6 +81,18 @@ public class ListaPreguntasFragmento extends Fragment {
 
 
                         LinearLayout ll = view.findViewById(R.id.preguntasLayout);
+                        Button btnDesregistrar=view.findViewById(R.id.btnDesregistrar);
+                        btnDesregistrar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                borrarFragmentoListaPreguntas.borrarArchivo();
+                                borrarFragmentoListaPreguntas.borrarFragmentoListaPreguntas();
+                                borrarFragmentoListaPreguntas.abrirFragmentoIngreso2();
+
+                            }
+                        });
+
 
 
 
@@ -88,6 +101,7 @@ public class ListaPreguntasFragmento extends Fragment {
             final Button button = new Button(container.getContext());
             button.setPadding(0,10,0,10);
             button.setText(preguntaYRespuesta[pos].getQuestionText());
+
 
             final int id=preguntaYRespuesta[pos].getId();
 
@@ -132,6 +146,12 @@ public class ListaPreguntasFragmento extends Fragment {
     public interface BorrarFragmentoListaPreguntas{
 
         void borrarFragmentoListaPreguntas(int id);
+
+        void borrarArchivo();
+
+        void borrarFragmentoListaPreguntas();
+
+        void abrirFragmentoIngreso2();
     }
 
 

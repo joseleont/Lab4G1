@@ -9,4 +9,6 @@
     <string name="IniciarSesion">Iniciar Sesión</string>
     <string name="Registro">Registro</string>
     <string name="Guardar">Guardar</string>
+    <string name="des_registrar">Des-Registrar</string>
+    <string name="salir_de_sesi_n">Salir de Sesión</string>
 </resources>

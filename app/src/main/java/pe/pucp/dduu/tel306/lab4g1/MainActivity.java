@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -60,14 +61,20 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
             abrirFragmentoListaPreguntas();
         }
         else{//NO EXISTE EL ARCHIVO
-
             abrirFragmentoIngreso();
         }
-
     }
 
 
-//FUNCION PARA GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
+    @Override
+    public void borrarArchivo() {
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        deleteFile("InformacionUsuario");
+    }
+
+    //FUNCION PARA GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
     public void guardarArchivo(int idUsuario,String name,String email,String password){
         Usuario usuario = new Usuario();
         usuario.setId(idUsuario);
@@ -125,6 +132,15 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         }
     }
 
+    @Override
+    public void abrirFragmentoIngreso2() {
+        InicioSesionFragmento inicioSesionFragmento = new InicioSesionFragmento().newInstance();
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.fragmentContainerIngreso,inicioSesionFragmento);
+        fragmentTransaction.commit();
+    }
 
     //FUNCION PARA SOLO ABRIR EL FRAGMENTO REGISTRO
     public void abrirFragmentoRegistro(){
@@ -180,6 +196,21 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
         abrirFragmentoDetallePreguntas();
     } //PARADO
+
+
+    @Override
+    public void borrarFragmentoListaPreguntas() {
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+
+        ListaPreguntasFragmento listaPreguntasFragmento = (ListaPreguntasFragmento) supportFragmentManager.findFragmentById(R.id.fragmentContainerIngreso);
+        if ( listaPreguntasFragmento!= null) { //SI HAY UNFRAGMENTO QUE BORRAR SE INGRESA AL IF
+            //se inicia la transaccion
+            FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+            fragmentTransaction.remove(listaPreguntasFragmento);
+            fragmentTransaction.commit();
+        }
+
+    }
 
     public void abrirFragmentoDetallePreguntas(){
 

@@ -13,10 +13,9 @@
         <LinearLayout
             android:id="@+id/preguntasLayout"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="207dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="136dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,16 +26,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
-            android:layout_marginBottom="79dp"
             android:text="@string/lista_de_preguntas"
             android:textColor="#673AB7"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/preguntasLayout"
             app:layout_constraintEnd_toEndOf="@+id/preguntasLayout"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="@+id/preguntasLayout"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnDesregistrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/salir_de_sesi_n"
+            app:layout_constraintEnd_toEndOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/preguntasLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
