@@ -254,9 +254,9 @@ public class DetallePreguntasFragmento extends Fragment {
         JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, url, objeto, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("msg", String.valueOf(response));
-                // Toast.makeText(getContext(), response, LENGTH_SHORT).show();
-                Toast.makeText(getContext(),response.toString(),LENGTH_SHORT).show();
+               //RECIBE TRUE OR FALSE
+
+
             }
         }, new Response.ErrorListener() {
             @Override
