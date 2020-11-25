@@ -57,11 +57,11 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
         if(verificarExistenciaDelArchivo()){
            //HAY UN ARCHIVO GUARDADO EN EL CELULAR
-            abrirFragmentoIngreso();
+            abrirFragmentoListaPreguntas();
         }
         else{ //NO EXISTE EL ARCHIVO
-            abrirFragmentoListaPreguntas();
 
+            abrirFragmentoIngreso();
         }
 
 
@@ -246,9 +246,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
         //PARADO USAR ESE ID
         fragmentTransaction.add(R.id.fragmentContainerIngreso, detallePreguntasFragmento);
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
 
     }
 
@@ -276,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         abrirFragmentoListaPreguntas(); //VOLVER A LA PARTE DE PREGUNTAS
     }
 
-    public void reemplazarUnFragmentPorElOtroXDXD(Class fragmentClass){
+    public void reemplazarUnFragmento(Class fragmentClass){
         Fragment fg = null;
         try {
             fg = (Fragment) fragmentClass.newInstance();

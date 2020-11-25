@@ -43,12 +43,12 @@ public class InicioSesionFragmento extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_inicio_sesion_fragmento, container, false);
         Button btnRegistro = view.findViewById(R.id.btnRegistro);
-        //otros botones y views xdxd
+        //otros botones y views
 
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).reemplazarUnFragmentPorElOtroXDXD(RegistroFragmento.class);
+                ((MainActivity)getActivity()).reemplazarUnFragmento(RegistroFragmento.class);
             }
         });
 

@@ -67,7 +67,6 @@ public class RegistroFragmento extends Fragment {
 
 
 
-
         //GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
         btnGuardarRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +138,7 @@ public class RegistroFragmento extends Fragment {
         btnIniciarSesionRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).reemplazarUnFragmentPorElOtroXDXD(InicioSesionFragmento.class);
+                ((MainActivity) getActivity()).reemplazarUnFragmento(InicioSesionFragmento.class);
             }
         });
 
