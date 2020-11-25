@@ -1,6 +1,7 @@
 package pe.pucp.dduu.tel306.lab4g1;
 
 import android.app.AlertDialog;
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -91,7 +93,7 @@ public class InicioSesionFragmento extends Fragment {
 
                             String respuesta = response.toString();
                             //poner el archivo json ***** FALTA ******
-                            ((MainActivity) getActivity()).guardarArchivov2(respuesta);
+                            //((MainActivity) getActivity()).guardarArchivov2(respuesta);
                             //reenvio a las preguntas
                             ((MainActivity) getActivity()).reemplazarUnFragmento(ListaPreguntasFragmento.class);
                         }
@@ -99,6 +101,8 @@ public class InicioSesionFragmento extends Fragment {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             //mandar un toast
+                            String texto = "Usuario registrado";
+                            Toast.makeText(getContext(), texto, Toast.LENGTH_LONG).show();
                             error.printStackTrace();
                         }
                     });
@@ -106,7 +110,8 @@ public class InicioSesionFragmento extends Fragment {
                     queue.add(jsonrequest);
 
                 }else {
-
+                    String texto = "Se debe llenar el email y contraseña";
+                    Toast.makeText(getContext(), texto, Toast.LENGTH_LONG).show();
                 }
 
             }
