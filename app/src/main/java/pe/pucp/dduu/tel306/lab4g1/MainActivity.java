@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(!verificarExistenciaDelArchivo()){
-           //NO HAY UN ARCHIVO GUARDADO EN EL CELULAR
+        if(verificarExistenciaDelArchivo()){
+           //HAY UN ARCHIVO GUARDADO EN EL CELULAR
             abrirFragmentoListaPreguntas();
         }
         else{//NO EXISTE EL ARCHIVO
