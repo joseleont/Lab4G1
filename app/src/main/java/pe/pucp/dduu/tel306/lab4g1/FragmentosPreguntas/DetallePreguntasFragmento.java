@@ -14,22 +14,29 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
 import java.io.File;
+import java.util.HashMap;
 
 import pe.pucp.dduu.tel306.lab4g1.Clases.API.Preguntas.Estadisticas.Conjunto;
 import pe.pucp.dduu.tel306.lab4g1.Clases.API.Preguntas.Estadisticas.Cuenta;
 import pe.pucp.dduu.tel306.lab4g1.Clases.API.Preguntas.PreguntaYRespuesta;
 import pe.pucp.dduu.tel306.lab4g1.Clases.API.Preguntas.Respuesta;
 import pe.pucp.dduu.tel306.lab4g1.R;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 
 public class DetallePreguntasFragmento extends Fragment {
@@ -89,7 +96,7 @@ public class DetallePreguntasFragmento extends Fragment {
                     else{
                         //EL USUSARIO NO HA RESPONDIDO A ESTA PREGUNTA
 
-                        mostrarPreguntasDetalladas(view,questionId,container);
+                        mostrarPreguntasDetalladas(view,questionId,container,userId);
                     }
 
                 }
@@ -174,10 +181,9 @@ public class DetallePreguntasFragmento extends Fragment {
     }
 
 
-
     PreguntaYRespuesta preguntaYRespuesta;
 
-    public void mostrarPreguntasDetalladas(View view,int idPregunta,ViewGroup container){
+    public void mostrarPreguntasDetalladas(View view,int idPregunta,ViewGroup container,int userId){
 
         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
         String url1="http://34.236.191.118:3000/api/v1/questions/";
@@ -204,16 +210,15 @@ public class DetallePreguntasFragmento extends Fragment {
                         button.setPadding(0,10,0,10);
                         button.setText(respuestas[pos].getAnswerText());
 
-                        final int id=respuestas[pos].getId();
+                        final int idRespuesta=respuestas[pos].getId();
 
                         button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //TODO falta enviar esta respuesta
+                                Log.d("infoApp",""+userId);
 
+                                mandarRespuestas(idPregunta,userId,idRespuesta,container);
                                 obtenerIdPregunta.borrarFragmentoDetallePreguntas();
-
-
 
                             }
                         });
@@ -231,6 +236,37 @@ public class DetallePreguntasFragmento extends Fragment {
         });
 
         requestQueue.add(stringRequest);
+
+    }
+
+
+    public void mandarRespuestas(int idPregunta,int idUser,int idAnswer,ViewGroup container){
+        HashMap<String, Integer> params = new HashMap<>();
+        params.put("iduser",idUser );
+        params.put("idanswer", idAnswer);
+        JSONObject objeto = new JSONObject(params);
+
+        RequestQueue queue = Volley.newRequestQueue(container.getContext());
+        String url1 = "http://34.236.191.118:3000/api/v1/questions/";
+        String url2="/answer";
+        String url=url1+idPregunta+url2;
+
+        JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, url, objeto, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("msg", String.valueOf(response));
+                // Toast.makeText(getContext(), response, LENGTH_SHORT).show();
+                Toast.makeText(getContext(),response.toString(),LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("msg", "onErrorResponse: "+ error.getMessage());
+
+            }
+        });
+
+        queue.add(jsonrequest);
 
     }
 
