@@ -10,62 +10,94 @@
         android:layout_width="match_parent"
         android:layout_height="574dp">
 
-        <EditText
-            android:id="@+id/editTextNombreRegistro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:ems="10"
-            android:hint="Nombre"
-            android:inputType="textPersonName"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/editTextCorreoRegistro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="88dp"
-            android:ems="10"
-            android:hint="Correo"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="@+id/editTextNombreRegistro"
-            app:layout_constraintStart_toStartOf="@+id/editTextNombreRegistro"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNombreRegistro" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextContraseñaRegistro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="textPersonName|textPassword"
-            app:layout_constraintEnd_toEndOf="@+id/editTextCorreoRegistro"
-            app:layout_constraintStart_toStartOf="@+id/editTextCorreoRegistro"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCorreoRegistro" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="41dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_persona" />
 
-        <Button
-            android:id="@+id/btnGuardarRegistro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
-            android:text="Guardar"
-            app:layout_constraintEnd_toEndOf="@+id/editTextContraseñaRegistro"
-            app:layout_constraintHorizontal_bias="0.491"
-            app:layout_constraintStart_toStartOf="@+id/editTextContraseñaRegistro"
-            app:layout_constraintTop_toBottomOf="@+id/editTextContraseñaRegistro" />
+                <EditText
+                    android:id="@+id/editTextNombreRegistro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:hint="@string/Nombre"
+                    android:inputType="textPersonName"
+                    android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/btnIniciarSesionRegistro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Iniciar Sesión"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/btnGuardarRegistro"
-            app:layout_constraintStart_toStartOf="@+id/btnGuardarRegistro"
-            app:layout_constraintTop_toBottomOf="@+id/btnGuardarRegistro" />
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="32dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_correo" />
+
+                <EditText
+                    android:id="@+id/editTextCorreoRegistro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:hint="@string/Correo"
+                    android:inputType="textPersonName"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="32dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_psswd" />
+
+                <EditText
+                    android:id="@+id/editTextContraseñaRegistro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:hint="@string/Contraseña"
+                    android:inputType="textPersonName|textPassword"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btnGuardarRegistro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="44dp"
+                    android:text="@string/Guardar" />
+
+                <Button
+                    android:id="@+id/btnIniciarSesionRegistro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/IniciarSesion" />
+            </LinearLayout>
+        </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

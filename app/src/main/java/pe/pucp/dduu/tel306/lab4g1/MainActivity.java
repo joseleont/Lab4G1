@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(!verificarExistenciaDelArchivo()){
+        if(verificarExistenciaDelArchivo()){
            //NO HAY UN ARCHIVO GUARDADO EN EL CELULAR
             abrirFragmentoListaPreguntas();
         }
@@ -110,11 +110,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
                     return super.getHeaders();
                 }
 
-
-
             };
-
-
             requestQueue.add(jsonObjReq);
         }
 
@@ -249,8 +245,6 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         fragmentTransaction.commit();
 
     }
-
-
 
     //DetallePreguntasFragmentos
     @Override
