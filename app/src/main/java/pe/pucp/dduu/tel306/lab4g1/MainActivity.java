@@ -15,7 +15,11 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -36,59 +40,38 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import pe.pucp.dduu.tel306.lab4g1.Clases.API.Preguntas.PreguntaYRespuesta;
 import pe.pucp.dduu.tel306.lab4g1.Clases.API.Preguntas.Respuesta;
 import pe.pucp.dduu.tel306.lab4g1.Clases.API.Usuario.Usuario;
+import pe.pucp.dduu.tel306.lab4g1.FragmentosPreguntas.DetallePreguntasFragmento;
+import pe.pucp.dduu.tel306.lab4g1.FragmentosPreguntas.ListaPreguntasFragmento;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ListaPreguntasFragmento.BorrarFragmentoListaPreguntas{
+
+    private int preguntaId=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        obtenerPreguntasQuestions();
-
         if(verificarExistenciaDelArchivo()){
-
-
-
+           //HAY UN ARCHIVO GUARDADO EN EL CELULAR
+            abrirFragmentoIngreso();
         }
         else{ //NO EXISTE EL ARCHIVO
-            abrirFragmentoIngreso();
 
+            abrirFragmentoListaPreguntas();
+            for(int a=0;a<50;a++);
+            if(preguntaId!=0){
+
+
+            }
 
         }
 
 
-
-
     }
-
-    public void obtenerPreguntasQuestions(){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url = "http://34.236.191.118:3000/api/v1/questions";
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("infoWS", "response");
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-
-        };
-
-
-        requestQueue.add(stringRequest);
-    }
-
 
     //POST
     public void obtenerRespuestaUsersNew(){
@@ -227,6 +210,49 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.remove(registroFragmento);
             fragmentTransaction.commit();
         }
+    }
+
+
+
+    public void abrirFragmentoListaPreguntas(){
+
+        ListaPreguntasFragmento listaPreguntasFragmento= new ListaPreguntasFragmento().newInstance();
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.fragmentContainerIngreso, listaPreguntasFragmento);
+        fragmentTransaction.commit();
+    }
+
+    //FUNCION PARA BORRAR EL FRAGMENTO
+    //LLAMADO DE ListaPreguntaFragmentos
+    @Override
+    public void borrarFragmentoListaPreguntas(int id) {
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+
+        ListaPreguntasFragmento listaPreguntasFragmento = (ListaPreguntasFragmento) supportFragmentManager.findFragmentById(R.id.fragmentContainerIngreso);
+        if ( listaPreguntasFragmento!= null) { //SI HAY UNFRAGMENTO QUE BORRAR SE INGRESA AL IF
+            //se inicia la transaccion
+            FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+            fragmentTransaction.remove(listaPreguntasFragmento);
+            fragmentTransaction.commit();
+        }
+
+        preguntaId= id; //CON ESTO SE OBTIENE EL ID DE LA PREGUNTA
+
+        abrirFragmentoDetallePreguntas(preguntaId);
+    } //PARADO
+
+    public void abrirFragmentoDetallePreguntas(int id){
+
+        DetallePreguntasFragmento detallePreguntasFragmento= new DetallePreguntasFragmento().newInstance();
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        //PARADO USAR ESE ID
+        fragmentTransaction.add(R.id.fragmentContainerIngreso, detallePreguntasFragmento);
+        fragmentTransaction.commit();
+
     }
 
 
