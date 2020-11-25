@@ -107,8 +107,12 @@ public class RegistroFragmento extends Fragment {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+
                             Log.d("msg", "onErrorResponse: "+ error.getMessage());
-                            Log.d("msg", "onErrorResponse: "+ "si arriba dice true no hay de que preocuparse :'vvvv es por la API");
+                            Log.d("msg", "onErrorResponse: "+ "si arriba dice true no hay de que preocuparse es por la API");
+
+                            ((MainActivity) getActivity()).reemplazarUnFragmento(InicioSesionFragmento.class);
+
                             // Log.d("msg", "error POST registro");
                         }
                     });
