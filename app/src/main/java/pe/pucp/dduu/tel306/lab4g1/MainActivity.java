@@ -1,5 +1,6 @@
 package pe.pucp.dduu.tel306.lab4g1;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -59,13 +60,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
             abrirFragmentoIngreso();
         }
         else{ //NO EXISTE EL ARCHIVO
-
             abrirFragmentoListaPreguntas();
-            for(int a=0;a<50;a++);
-            if(preguntaId!=0){
-
-
-            }
 
         }
 
@@ -128,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
 
 
+
+
 //FUNCION PARA GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
     public void guardarArchivo(String name,String email,String password){
         Usuario usuario = new Usuario();
@@ -158,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
         return true;
     }
-
 
     //FRAGMENTOS
     //FUNCIONES PARA ABRIR Y BORRAR FRAGMENTOS*********************************
@@ -268,6 +264,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
     public void borrarFragmentoDetallePreguntas() {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
 
+
         DetallePreguntasFragmento detallePreguntasFragmento = (DetallePreguntasFragmento) supportFragmentManager.findFragmentById(R.id.fragmentContainerIngreso);
         if (detallePreguntasFragmento != null) { //SI HAY UNFRAGMENTO QUE BORRAR SE INGRESA AL IF
             //se inicia la transaccion
@@ -277,6 +274,17 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         }
 
         abrirFragmentoListaPreguntas(); //VOLVER A LA PARTE DE PREGUNTAS
+    }
+
+    public void reemplazarUnFragmentPorElOtroXDXD(Class fragmentClass){
+        Fragment fg = null;
+        try {
+            fg = (Fragment) fragmentClass.newInstance();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        FragmentManager supportFragmentManager = this.getSupportFragmentManager();
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerIngreso, fg).commit();
     }
 
     public boolean tengoInternet() {
