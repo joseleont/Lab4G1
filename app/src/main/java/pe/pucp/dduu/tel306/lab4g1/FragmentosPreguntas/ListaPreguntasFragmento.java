@@ -88,7 +88,7 @@ public class ListaPreguntasFragmento extends Fragment {
 
                                 borrarFragmentoListaPreguntas.borrarArchivo();
                                 borrarFragmentoListaPreguntas.borrarFragmentoListaPreguntas();
-                                borrarFragmentoListaPreguntas.abrirFragmentoIngreso2();
+                               // borrarFragmentoListaPreguntas.abrirFragmentoIngreso2();
 
                             }
                         });
@@ -151,7 +151,7 @@ public class ListaPreguntasFragmento extends Fragment {
 
         void borrarFragmentoListaPreguntas();
 
-        void abrirFragmentoIngreso2();
+       // void abrirFragmentoIngreso2();
     }
 
 

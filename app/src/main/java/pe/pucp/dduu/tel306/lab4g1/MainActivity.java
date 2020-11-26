@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
     //FUNCION PARA BORRAR EL FRAGMENTO
     //LLAMADO DE ListaPreguntaFragmentos
 
-    @Override
+    //@Override
     public void borrarFragmentoListaPreguntas(int id) {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
 
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         return preguntaId;
     }
 
-    @Override
+    //@Override
     public void borrarFragmentoDetallePreguntas() {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
 
