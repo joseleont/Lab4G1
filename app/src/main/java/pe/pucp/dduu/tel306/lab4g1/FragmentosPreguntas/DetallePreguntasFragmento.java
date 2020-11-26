@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,12 +67,25 @@ public class DetallePreguntasFragmento extends Fragment {
         View view= inflater.inflate(R.layout.fragment_detalle_preguntas_fragmento, container, false);
 
         detallePreguntas(view,container);
-        return view;
 
+
+
+        return view;
     }
 
     public void detallePreguntas(View view,ViewGroup container){
         if(!verificarExistenciaDelArchivo()){
+
+            ImageView btn=view.findViewById(R.id.imageView);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    obtenerIdPregunta.borrarFragmentoDetallePreguntas();
+
+
+                }
+            });
+
             RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
 
             //TODO FALTA OBTNER EL ID DEL USUARIO
@@ -144,6 +158,8 @@ public class DetallePreguntasFragmento extends Fragment {
                 LinearLayout ll = view.findViewById(R.id.respuestasLayout);
                 TextView textView =view.findViewById(R.id.textViewPregunta);
 
+
+
                 textView.setText(conjunto.getQuestion().getQuestionText());
 
                 Log.d("infoApp",""+cuenta.length);
@@ -196,6 +212,7 @@ public class DetallePreguntasFragmento extends Fragment {
 
                 LinearLayout ll = view.findViewById(R.id.respuestasLayout);
                 TextView textView =view.findViewById(R.id.textViewPregunta);
+
 
                 Gson gson = new Gson();
                 preguntaYRespuesta= gson.fromJson(response, PreguntaYRespuesta.class);
@@ -254,9 +271,9 @@ public class DetallePreguntasFragmento extends Fragment {
         JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, url, objeto, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("msg", String.valueOf(response));
-                // Toast.makeText(getContext(), response, LENGTH_SHORT).show();
-                Toast.makeText(getContext(),response.toString(),LENGTH_SHORT).show();
+               //RECIBE TRUE OR FALSE
+
+
             }
         }, new Response.ErrorListener() {
             @Override

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         setContentView(R.layout.activity_main);
 
         if(verificarExistenciaDelArchivo()){
-           //NO HAY UN ARCHIVO GUARDADO EN EL CELULAR
+           //HAY UN ARCHIVO GUARDADO EN EL CELULAR
             abrirFragmentoListaPreguntas();
         }
         else{//NO EXISTE EL ARCHIVO
@@ -87,9 +88,11 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                     "http://34.236.191.118:3000/api/v1/users/new", new JSONObject(parametros),
                     new Response.Listener<JSONObject>() {
+
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.d("infoWs", response.toString());
+
                         }
                     }, new Response.ErrorListener() {
 
@@ -120,6 +123,13 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
     }
 
 
+  //  @Override
+    public void borrarArchivo() {
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        deleteFile("configuracion.json");
+    }
 
 
 
@@ -203,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
     }
 
 
+
     //FUNCION PARA SOLO ABRIR EL FRAGMENTO REGISTRO
     public void abrirFragmentoRegistro(){
         RegistroFragmento registroFragmento= new RegistroFragmento().newInstance();
@@ -257,6 +268,21 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
         abrirFragmentoDetallePreguntas();
     } //PARADO
+
+
+    //@Override
+    public void borrarFragmentoListaPreguntas() {
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+
+        ListaPreguntasFragmento listaPreguntasFragmento = (ListaPreguntasFragmento) supportFragmentManager.findFragmentById(R.id.fragmentContainerIngreso);
+        if ( listaPreguntasFragmento!= null) { //SI HAY UNFRAGMENTO QUE BORRAR SE INGRESA AL IF
+            //se inicia la transaccion
+            FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+            fragmentTransaction.remove(listaPreguntasFragmento);
+            fragmentTransaction.commit();
+        }
+
+    }
 
     public void abrirFragmentoDetallePreguntas(){
 

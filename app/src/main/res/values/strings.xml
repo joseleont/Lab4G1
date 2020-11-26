@@ -2,5 +2,13 @@
     <string name="app_name">Lab4G1</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="lista_de_preguntas">LISTA DE PREGUNTAS</string>
+    <string name="lista_de_preguntas">Lista de Preguntas</string>
+    <string name = "Nombre">Nombre</string>
+    <string name="Correo">Correo</string>
+    <string name="Contraseña">Contraseña</string>
+    <string name="IniciarSesion">Iniciar Sesión</string>
+    <string name="Registro">Registro</string>
+    <string name="Guardar">Guardar</string>
+    <string name="des_registrar">Des-Registrar</string>
+    <string name="salir_de_sesi_n">Salir de Sesión</string>
 </resources>
