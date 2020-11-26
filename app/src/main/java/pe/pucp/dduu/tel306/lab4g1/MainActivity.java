@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         }catch(IOException e){
             e.printStackTrace();
         }
+
         idUserM=idUser;
     }
 
@@ -102,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
     public int obtenerIdUsuario() {
         return idUserM;
     }
-
 
 
    //VERIFICAR SI EL ARCHIVO EXISTE
