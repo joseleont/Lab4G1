@@ -1,12 +1,15 @@
 package pe.pucp.dduu.tel306.lab4g1;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.os.CpuUsageInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +24,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
+import pe.pucp.dduu.tel306.lab4g1.Clases.API.Usuario.Usuario;
 import pe.pucp.dduu.tel306.lab4g1.FragmentosPreguntas.ListaPreguntasFragmento;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -75,7 +83,7 @@ public class InicioSesionFragmento extends Fragment {
                 String email = correo.getText().toString();
                 String pw = pass.getText().toString();
 
-                if(!email.equals("") && !pw.equals("")){
+                if(!email.isEmpty() && !pw.isEmpty()){
                     //ambos estan llenos
                     HashMap<String,String> params = new HashMap<>();
                     params.put("email", email);
@@ -91,19 +99,28 @@ public class InicioSesionFragmento extends Fragment {
                         @Override
                         public void onResponse(JSONObject response) {
 
-                            String respuesta = response.toString();
-                            //poner el archivo json ***** FALTA ******
-                            //((MainActivity) getActivity()).guardarArchivov2(respuesta);
-                            //reenvio a las preguntas
-                            ((MainActivity) getActivity()).reemplazarUnFragmento(ListaPreguntasFragmento.class);
+                            Gson gson=new Gson();
+                            Usuario usuario = gson.fromJson(String.valueOf(response), Usuario.class);
+
+                                Usuario usuarioG=new Usuario();
+                                usuarioG.setId(usuario.getId());
+                                usuarioG.setName(usuario.getName());
+                                usuarioG.setEmail(usuario.getEmail());
+                                usuarioG.setPassword(usuario.getPassword());
+
+                                funciones.guardarArchivo(usuarioG,usuarioG.getId()); //FUNCION PARA GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
+
+                            funciones.borrarFragmentoIngreso();
+                           // ((MainActivity) getActivity()).reemplazarUnFragmento(ListaPreguntasFragmento.class);
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            //mandar un toast
+
                             String texto = "Usuario registrado";
                             Toast.makeText(getContext(), texto, Toast.LENGTH_LONG).show();
                             error.printStackTrace();
+
                         }
                     });
 
@@ -126,5 +143,18 @@ public class InicioSesionFragmento extends Fragment {
         return view;
     }
 
+
+    private Funciones funciones;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        funciones =(Funciones) context;
+    }
+
+    public interface Funciones {
+
+        void guardarArchivo(Usuario usuarioG,int idUsuario);
+        void borrarFragmentoIngreso();
+    }
 
 }

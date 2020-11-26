@@ -1,5 +1,6 @@
 package pe.pucp.dduu.tel306.lab4g1;
 
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,7 +67,6 @@ public class RegistroFragmento extends Fragment {
         Button btnIniciarSesionRegistro = view.findViewById(R.id.btnIniciarSesionRegistro);
 
 
-
         //GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
         btnGuardarRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,50 +91,39 @@ public class RegistroFragmento extends Fragment {
                 JSONObject jusuario = new JSONObject(params);
 
 
-                if (cumpleRegex(nombreRegistro, regexNombre)) {
+                if (!cumpleRegex(nombreRegistro, regexNombre)) {
                     //hacer el post al API
                     Log.d("msg", "exito");
                     //POST al API
+
                     RequestQueue queue = Volley.newRequestQueue(getContext());
                     String urlRegistro = "http://34.236.191.118:3000/api/v1/users/new";
                     JsonObjectRequest jsonrequest = new JsonObjectRequest(Request.Method.POST, urlRegistro, jusuario, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.d("msg", String.valueOf(response));
-                            // Toast.makeText(getContext(), response, LENGTH_SHORT).show();
-                            Toast.makeText(getContext(),response.toString(),LENGTH_SHORT).show();
+
+
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
 
                             Log.d("msg", "onErrorResponse: "+ error.getMessage());
-                            Log.d("msg", "onErrorResponse: "+ "si arriba dice true no hay de que preocuparse es por la API");
-
-                            ((MainActivity) getActivity()).reemplazarUnFragmento(InicioSesionFragmento.class);
 
                             // Log.d("msg", "error POST registro");
                         }
                     });
 
                     queue.add(jsonrequest);
+                    ((MainActivity) getActivity()).reemplazarUnFragmento(InicioSesionFragmento.class);
 
-                    /*
-                    try(FileOutputStream fileOutputStream = getActivity().openFileOutput("InformacionUsuario",MODE_PRIVATE);
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);){
 
-                    objectOutputStream.writeObject(usuario);
-                    Log.d("msg","escritura de objeto exitosa");
-
-                    }catch(IOException e){
-                    e.printStackTrace();
-                    }
-                    */
                 } else {
-                    //mostrar un mensaje de error y no dejar hacer el post al API xdxd
+                    //mostrar un mensaje de error y no dejar hacer el post al API
                     Log.d("msg", "no cumple regex");
+                    Toast.makeText(getContext(),"Ingrese un nombre o correo correctos", LENGTH_SHORT).show();
                 }
-
 
             }
         });

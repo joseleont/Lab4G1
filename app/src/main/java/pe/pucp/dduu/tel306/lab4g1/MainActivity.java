@@ -48,7 +48,7 @@ import pe.pucp.dduu.tel306.lab4g1.Clases.API.Usuario.Usuario;
 import pe.pucp.dduu.tel306.lab4g1.FragmentosPreguntas.DetallePreguntasFragmento;
 import pe.pucp.dduu.tel306.lab4g1.FragmentosPreguntas.ListaPreguntasFragmento;
 
-public class MainActivity extends AppCompatActivity implements ListaPreguntasFragmento.BorrarFragmentoListaPreguntas, DetallePreguntasFragmento.ObtenerIdPregunta {
+public class MainActivity extends AppCompatActivity implements ListaPreguntasFragmento.BorrarFragmentoListaPreguntas, DetallePreguntasFragmento.ObtenerIdPregunta, InicioSesionFragmento.Funciones {
 
     private int preguntaId=0;
 
@@ -69,61 +69,8 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
     }
 
-    //POST
-    public void obtenerRespuestaUsersNew(){
-        if (tengoInternet()) {
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-            Map<String, String> parametros= new HashMap<String, String>();
-            Usuario usuario = new Usuario();
-            usuario.setName("Mario Sotelo");
-            usuario.setEmail("mgsotelo@pucp.pe");
-            usuario.setPassword("1234567890");
-
-            parametros.put("name",usuario.getName());
-            parametros.put("email",usuario.getEmail());
-            parametros.put("password",usuario.getPassword());
-
-
-            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                    "http://34.236.191.118:3000/api/v1/users/new", new JSONObject(parametros),
-                    new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("infoWs", response.toString());
-
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    //Log.d("infoWs", "error");
-
-                }
-            }) {
-
-
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                   // HashMap<String, String> headers = new HashMap<String, String>();
-                   // headers.put("Content-Type", "application/json; charset=utf-8");
-                    //return headers;
-                    return super.getHeaders();
-                }
-
-
-
-            };
-
-
-            requestQueue.add(jsonObjReq);
-        }
-
-    }
-
-
-  //  @Override
+    @Override
     public void borrarArchivo() {
         SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -133,53 +80,37 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
 
 
 
+    int idUserM=0;
 
-//FUNCION PARA GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
-    public void guardarArchivo(String name,String email,String password){
-        Usuario usuario = new Usuario();
-        usuario.setName(name);
-        usuario.setEmail(email);
-        usuario.setPassword(password);
 
+    //FUNCION PARA GUARDAR EL ARCHIVO DE LA INFORMACION DE LA PERSONA
+    @Override
+    public void guardarArchivo(Usuario usuarioG,int idUser) {
         try(FileOutputStream fileOutputStream =openFileOutput("InformacionUsuario",MODE_PRIVATE);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);){
 
-            objectOutputStream.writeObject(usuario);
+            objectOutputStream.writeObject(usuarioG);
             Log.d("msg","escritura de objeto exitosa");
 
         }catch(IOException e){
             e.printStackTrace();
         }
-
+        idUserM=idUser;
     }
 
-    public void guardarArchivov2(String json){
-        try{
-            File archivo = new File("configuracion.json");
-            if (!archivo.exists()) {
-                FileWriter writer = new FileWriter(archivo);
-                writer.append(json);
-                writer.flush();
-                writer.close();
-                Log.d("msg","creacion de json exitosa");
-            }
-            /*
-            FileOutputStream fileOutputStream =openFileOutput("InformacionUsuario",MODE_PRIVATE);
-            fileOutputStream.write(json.getBytes());
-
-            fileOutputStream.close();
-            */
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+    @Override
+    public int obtenerIdUsuario() {
+        return idUserM;
     }
+
+
 
    //VERIFICAR SI EL ARCHIVO EXISTE
     public boolean verificarExistenciaDelArchivo(){
 
-        File archivo = new File("configuracion.json");
+        File archivo = new File("InformacionUsuario");
         if (!archivo.exists()) {
-            Log.d("infoApp","OJO: ¡¡No existe el archivo de configuración!!");
+            Log.d("infoApp","No existe!");
           return false;
         }
 
@@ -199,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         fragmentTransaction.commit();
     }
 
+    @Override
     public void borrarFragmentoIngreso() {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
 
@@ -210,9 +142,8 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
             fragmentTransaction.commit();
 
         }
+        abrirFragmentoListaPreguntas();
     }
-
-
 
     //FUNCION PARA SOLO ABRIR EL FRAGMENTO REGISTRO
     public void abrirFragmentoRegistro(){
@@ -224,18 +155,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
         fragmentTransaction.commit();
     }
 
-    //FUNCION PARA BORRAR EL FRAGMENTO
-    public void borrarFragmentoRegistro() {
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
 
-        RegistroFragmento registroFragmento = (RegistroFragmento) supportFragmentManager.findFragmentById(R.id.fragmentContainerIngreso);
-        if (registroFragmento != null) { //SI HAY UNFRAGMENTO QUE BORRAR SE INGRESA AL IF
-            //se inicia la transaccion
-            FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-            fragmentTransaction.remove(registroFragmento);
-            fragmentTransaction.commit();
-        }
-    }
 
 
 
@@ -252,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
     //FUNCION PARA BORRAR EL FRAGMENTO
     //LLAMADO DE ListaPreguntaFragmentos
 
-    //@Override
+    @Override
     public void borrarFragmentoListaPreguntas(int id) {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
 
@@ -270,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
     } //PARADO
 
 
-    //@Override
+    @Override
     public void borrarFragmentoListaPreguntas() {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
 
@@ -282,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements ListaPreguntasFra
             fragmentTransaction.commit();
         }
 
+      abrirFragmentoIngreso();
     }
 
     public void abrirFragmentoDetallePreguntas(){

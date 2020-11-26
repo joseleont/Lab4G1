@@ -11,4 +11,6 @@
     <string name="Guardar">Guardar</string>
     <string name="des_registrar">Des-Registrar</string>
     <string name="salir_de_sesi_n">Salir de Sesión</string>
+    <string name="todo">TODO</string>
+
 </resources>

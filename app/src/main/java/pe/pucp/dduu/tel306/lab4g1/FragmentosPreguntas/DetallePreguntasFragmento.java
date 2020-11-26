@@ -88,11 +88,12 @@ public class DetallePreguntasFragmento extends Fragment {
 
             RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
 
-            //TODO FALTA OBTNER EL ID DEL USUARIO
+
+
             String url1= "http://34.236.191.118:3000/api/v1/answers/detail?questionid=";
             int questionId=obtenerIdPregunta.obtenerIdPregunta();
             String url2="&userid=";
-            int userId=1;
+            int userId=obtenerIdPregunta.obtenerIdUsuario();;
             String url = url1+questionId+url2+userId;
             Log.d("infoApp",url);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -301,6 +302,8 @@ public class DetallePreguntasFragmento extends Fragment {
         int obtenerIdPregunta();
 
         void borrarFragmentoDetallePreguntas();
+
+        int obtenerIdUsuario();
     }
 
 }
